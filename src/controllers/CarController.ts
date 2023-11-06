@@ -69,33 +69,35 @@ class CarController {
     }
   }
 
-  async searchByName(req: Request, res: Response): Promise<Response> {
-    const name = req.query.name as string | undefined; // Assegure que 'name' seja uma string ou 'undefined'
-  
-    if (name === undefined) {
-      return res.status(400).json({ error: 'Nome não fornecido na consulta' });
-    }
+  async search(req: Request, res: Response): Promise<Response> {
+    const { name } = req.query;
   
     try {
-      const cleanedName = name.trim(); // Remova espaços em branco no início e no final
+      if (!name) {
+        return res.status(400).json({ error: 'Parâmetros de consulta inválidos' });
+      }
+  
+      const cleanedName = String(name).trim();
       const cars = await CarModel.findAll({
         where: {
           marca: {
-            [Op.iLike]: `%${cleanedName}%`, // Realiza pesquisa case-insensitive com espaços extras
+            [Op.iLike]: `%${cleanedName}%`,
           },
         },
       });
   
       if (cars.length === 0) {
-        return res.status(404).json({ error: 'Nenhum carro encontrado com o nome especificado' });
+        return res.status(404).json({ error: 'Nenhum carro encontrado com a marca especificada' });
       }
   
       return res.json(cars);
     } catch (error) {
-      return res.status(500).json({ error: 'Erro ao buscar carros por nome' });
+      return res.status(500).json({ error: 'Erro ao buscar carros' });
     }
   }
-
+  
+  
+  
 }
 
 export default new CarController();

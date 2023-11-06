@@ -1,5 +1,4 @@
 // src/models/CarModel.ts
-
 import { Model, DataTypes } from 'sequelize';
 import sequelize from '../db'; // Importe a instância do Sequelize
 
@@ -10,8 +9,14 @@ class CarModel extends Model {
   public versao!: string;
   public ano!: number;
   public quilometragem!: number;
+  public combustivel!: string;
   public tipoCambio!: string;
   public precoVenda!: number;
+  public localizacao!: string;
+  public imagem!: string;
+  public descricao!: string;
+  public qtdDonos!: string;
+  public contato!: string;
 }
 
 CarModel.init(
@@ -50,10 +55,30 @@ CarModel.init(
       type: DataTypes.DOUBLE,
       allowNull: false,
     },
+    localizacao: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    imagem: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    descricao: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    qtdDonos: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    contato: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    modelName: 'Carros', // Nome da tabela no banco de dados
+    modelName: 'Cars', // Nome da tabela no banco de dados
     timestamps: false, // Não cria colunas `createdAt` e `updatedAt`
   }
 );

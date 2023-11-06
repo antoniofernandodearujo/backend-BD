@@ -2,9 +2,11 @@
 import express from 'express';
 import router from './routes/Routes';
 import sequelize from './db';
+import cors from 'cors';
 
 const app = express();
 
+app.use(cors());
 
 // Sincronizar o Sequelize com o banco de dados
 sequelize
@@ -19,7 +21,7 @@ sequelize
 app.use(express.json());
 app.use('/api', router); // Use as rotas com prefixo "/api"
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5151;
 
 app.listen(port, () => {
   console.log(`API ONLINE na porta ${port} `);
